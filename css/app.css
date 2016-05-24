@@ -1,0 +1,14 @@
+html, body {
+  overflow:hidden;
+  height:100%;
+  padding: 0;
+  margin: 0;
+}
+
+#world {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	background: linear-gradient(#c4bae4, #f7aaaa);
+}
