@@ -269,45 +269,58 @@ var AirGundam = function(){
   lEye.receiveShadow = true;
   this.mesh.add(lEye);
 
-  var geomPropeller = new THREE.BoxGeometry(20,10,10,1,1,1);
-  geomPropeller.vertices[4].y-=5;
-  geomPropeller.vertices[4].z+=5;
-  geomPropeller.vertices[5].y-=5;
-  geomPropeller.vertices[5].z-=5;
-  geomPropeller.vertices[6].y+=5;
-  geomPropeller.vertices[6].z+=5;
-  geomPropeller.vertices[7].y+=5;
-  geomPropeller.vertices[7].z-=5;
-  var matPropeller = new THREE.MeshPhongMaterial({color:Colors.brown, shading:THREE.FlatShading});
+
+
+
+  var geomPropeller = new THREE.BoxGeometry(40,50,8,1,1,1);
+  var matPropeller = new THREE.MeshPhongMaterial({color:Colors.brightBlue, shading:THREE.FlatShading});
   this.propeller = new THREE.Mesh(geomPropeller, matPropeller);
 
   this.propeller.castShadow = true;
   this.propeller.receiveShadow = true;
 
-  var geomBlade = new THREE.BoxGeometry(1,80,10,1,1,1);
-  var matBlade = new THREE.MeshPhongMaterial({color:Colors.brownDark, shading:THREE.FlatShading});
+  var geomBlade = new THREE.CylinderGeometry(1,15,80,4,1,false);
+  var matBlade = new THREE.MeshPhongMaterial({color:Colors.brightBlue, shading:THREE.FlatShading});
   var blade1 = new THREE.Mesh(geomBlade, matBlade);
-  blade1.position.set(8,0,0);
+  blade1.position.set(-5,0,5);
+  blade1.rotation.z = .7;
 
   blade1.castShadow = true;
   blade1.receiveShadow = true;
 
+  var spinRotate = 360;
+
   var blade2 = blade1.clone();
-  blade2.rotation.x = Math.PI/2;
+  blade2.rotation.x = spinRotate / 2;
 
   blade2.castShadow = true;
   blade2.receiveShadow = true;
 
+  var blade3 = blade1.clone();
+  blade3.rotation.x = spinRotate / 3;
+
+  blade3.castShadow = true;
+  blade3.receiveShadow = true;
+
+  var blade4 = blade1.clone();
+  blade4.rotation.x = spinRotate / 4;
+
+  blade4.castShadow = true;
+  blade4.receiveShadow = true;
+
+  var blade5 = blade1.clone();
+  blade5.rotation.x = spinRotate / 5;
+
+  blade5.castShadow = true;
+  blade5.receiveShadow = true;
+
   this.propeller.add(blade1);
   this.propeller.add(blade2);
-  this.propeller.position.set(-80,0,0);
+  this.propeller.add(blade3);
+  this.propeller.add(blade4);
+  this.propeller.add(blade5);
+  this.propeller.position.set(-60,0,0);
   this.mesh.add(this.propeller);
-
-  // var wheelProtecGeom = new THREE.BoxGeometry(30,15,10,1,1,1);
-  // var wheelProtecMat = new THREE.MeshPhongMaterial({color:Colors.red, shading:THREE.FlatShading});
-  // var wheelProtecR = new THREE.Mesh(wheelProtecGeom,wheelProtecMat);
-  // wheelProtecR.position.set(25,-20,25);
-  // this.mesh.add(wheelProtecR);
 
   //var wheelTireGeom = new THREE.BoxGeometry(5,70,4);
   var frontLegGeom = new THREE.TorusGeometry(15, 3, 16, 50, 3 );
@@ -373,11 +386,11 @@ Planet = function(){
   geom.mergeVertices();
   var l = geom.vertices.length;
 
-  this.waves = [];
+  this.ground = [];
 
   for (var i=0;i<l;i++){
     var v = geom.vertices[i];
-    this.waves.push({y:v.y,
+    this.ground.push({y:v.y,
                      x:v.x,
                      z:v.z,
                      ang:Math.random()*Math.PI*2,
@@ -387,8 +400,8 @@ Planet = function(){
   };
   var mat = new THREE.MeshPhongMaterial({
     color:Colors.grey,
-    transparent:true,
-    opacity:.8,
+    //transparent:true,
+    //opacity:.8,
     shading:THREE.FlatShading,
 
   });
@@ -398,12 +411,12 @@ Planet = function(){
 
 }
 
-Planet.prototype.moveWaves = function (){
+Planet.prototype.moveGround = function (){
   var verts = this.mesh.geometry.vertices;
   var l = verts.length;
   for (var i=0; i<l; i++){
     var v = verts[i];
-    var vprops = this.waves[i];
+    var vprops = this.ground[i];
     v.x =  vprops.x + Math.cos(vprops.ang)*vprops.amp;
     v.y = vprops.y + Math.sin(vprops.ang)*vprops.amp;
     vprops.ang += vprops.speed;
@@ -464,7 +477,7 @@ function loop(){
   updateGundam();
   //airgundam.pilot.updateHairs();
   updateCameraFov();
-  planet.moveWaves();
+  planet.moveGround();
   sky.mesh.rotation.z += .01;
   renderer.render(scene, camera);
   requestAnimationFrame(loop);
@@ -476,7 +489,7 @@ function updateGundam(){
   airgundam.mesh.position.y += (targetY-airgundam.mesh.position.y)*0.1;
   airgundam.mesh.rotation.z = (targetY-airgundam.mesh.position.y)*0.0128;
   airgundam.mesh.rotation.x = (airgundam.mesh.position.y-targetY)*0.0064;
-  airgundam.propeller.rotation.x += 0.3;
+  airgundam.propeller.rotation.x += 0.25;
 }
 
 function updateCameraFov(){
