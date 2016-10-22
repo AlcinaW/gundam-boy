@@ -204,27 +204,6 @@ var AirGundam = function(){
   gundambody.receiveShadow = true;
   this.mesh.add(gundambody);
 
-  // Engine
-
-  // var geomEngine = new THREE.BoxGeometry(50,50,50,1,1,1);
-  // var matEngine = new THREE.MeshPhongMaterial({color:Colors.white, shading:THREE.FlatShading});
-  // var engine = new THREE.Mesh(geomEngine, matEngine);
-  // engine.position.x = 50;
-  // engine.castShadow = true;
-  // engine.receiveShadow = true;
-  // this.mesh.add(engine);
-
-  // Tail Plane
-
-  // var geomTailPlane = new THREE.BoxGeometry(15,20,5,1,1,1);
-  // var matTailPlane = new THREE.MeshPhongMaterial({color:Colors.red, shading:THREE.FlatShading});
-  // var tailPlane = new THREE.Mesh(geomTailPlane, matTailPlane);
-  // tailPlane.position.set(-40,20,0);
-  // tailPlane.castShadow = true;
-  // tailPlane.receiveShadow = true;
-  // this.mesh.add(tailPlane);
-
-
   var geomLCrown = new THREE.CylinderGeometry(3,10,55,4,1,false);
   var matLCrown = new THREE.MeshPhongMaterial({color:Colors.yellow, shading:THREE.FlatShading});
   var lCrown = new THREE.Mesh(geomLCrown, matLCrown);
@@ -400,8 +379,6 @@ Planet = function(){
   };
   var mat = new THREE.MeshPhongMaterial({
     color:Colors.grey,
-    //transparent:true,
-    //opacity:.8,
     shading:THREE.FlatShading,
 
   });
